@@ -1,12 +1,9 @@
-import logoImg from './assets/logo.svg';
+import Logo from './components/Logo/Logo';
 
 function App() {
   return (
     <>
-      <div>
-        <img src={logoImg} alt='logo'/>
-      </div>
-      <h1>React todo list</h1>
+      <Logo />
     </>
   );
 }

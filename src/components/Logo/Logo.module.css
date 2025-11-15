@@ -1,0 +1,20 @@
+.logoContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.logoImg {
+  width: 240px;
+  height: 240px;
+}
+
+.logoImg img {
+  object-fit: contain;
+}
+
+.logoText {
+  font-size: var(--font-h2);
+}
