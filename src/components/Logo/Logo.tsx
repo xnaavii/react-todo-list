@@ -7,7 +7,7 @@ export default function Logo() {
       <div className={classes.logoImg}>
         <img src={logoImg} alt="logo" />
       </div>
-      <h1 className={classes.logoText}>React todo list</h1>
+      <h1 className={classes.logoText}>To-Do List</h1>
     </div>
   );
 }

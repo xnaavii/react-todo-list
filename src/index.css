@@ -1,5 +1,5 @@
 :root {
-  font-family: system-ui, Poppins, Helvetica, Arial, sans-serif;
+  font-family: Poppins, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   font-weight: 500;
 
@@ -24,6 +24,12 @@
   --font-h3: 2.074rem;
   --font-h2: 2.488rem;
   --font-h1: 2.986rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
