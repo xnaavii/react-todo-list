@@ -1,9 +1,11 @@
-import { useState } from 'react';
 import classes from './TaskInput.module.css';
 
-export default function TaskInput() {
-  const [value, setValue] = useState('');
+type TaskInputProps = {
+  value: string;
+  onChange: (newValue: string) => void;
+};
 
+export default function TaskInput({ value, onChange }: TaskInputProps) {
   return (
     <form className={classes.form}>
       <input
@@ -11,7 +13,7 @@ export default function TaskInput() {
         placeholder="Add a task"
         className={classes.input}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
       />
       <button type="submit" hidden>
         Add
