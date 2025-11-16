@@ -21,9 +21,9 @@ test('renders the input field', () => {
   expect(taskInput).toBeInTheDocument();
 });
 
-test('user can type in the input', () => {
+test('user can type in the input', async () => {
   render(<App />);
   const taskInput = screen.getByLabelText(/Add a task/i);
-  userEvent.type(taskInput, 'Buy milk');
+  await userEvent.type(taskInput, 'Buy milk');
   expect(taskInput).toHaveValue('Buy milk');
 });
