@@ -13,3 +13,9 @@ test('renders the logo', () => {
   expect(text).toBeInTheDocument();
   expect(logo).toBeInTheDocument();
 });
+
+test('renders the input field', () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  expect(taskInput).toBeInTheDocument();
+});
