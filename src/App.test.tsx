@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from './App';
 
 test('renders the app', () => {
@@ -20,4 +21,9 @@ test('renders the input field', () => {
   expect(taskInput).toBeInTheDocument();
 });
 
-test('')
+test('user can type in the input', () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  userEvent.type(taskInput, 'Buy milk');
+  expect(taskInput).toHaveValue('Buy milk');
+});
