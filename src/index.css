@@ -33,10 +33,9 @@
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 16px;
 }
 
 body {
-  font-size: 1.6rem;
   background-color: var(--primary-color);
 }

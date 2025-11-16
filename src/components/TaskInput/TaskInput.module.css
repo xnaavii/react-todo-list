@@ -1,10 +1,14 @@
+.form {
+  width: 100%;
+}
+
 .input {
   padding: 0 12px;
-  width: 315px;
+  width: inherit;
   height: 32px;
   border: none;
-  border-bottom: inset 2px #000F08;
-  background-color: #EDE8D0;
+  border-bottom: inset 2px #000f08;
+  background-color: #ede8d0;
 }
 
 .input::placeholder {
