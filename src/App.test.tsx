@@ -27,3 +27,12 @@ test('user can type in the input', async () => {
   await userEvent.type(taskInput, 'Buy milk');
   expect(taskInput).toHaveValue('Buy milk');
 });
+
+test('shows an error when submitting empty input', async () => {
+  render(<App/>);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, '{Enter}');
+  const errorMessage = screen.getByText(/Task name cannot be empty/i)
+  expect(errorMessage).toBeInTheDocument();
+
+})
