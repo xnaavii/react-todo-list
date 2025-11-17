@@ -48,3 +48,12 @@ test('removes error message when typing', async () => {
     screen.queryByText(/Task name cannot be empty/i)
   ).not.toBeInTheDocument();
 });
+
+test('adds a new task to the list when the form is submitted', async () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, 'Buy milk{Enter}');
+
+  const taskElement = screen.getByText('Buy milk');
+  expect(taskElement).toBeInTheDocument();
+});
