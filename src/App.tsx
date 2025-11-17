@@ -2,13 +2,8 @@ import { useState } from 'react';
 import TaskInput from './components/TaskInput/TaskInput';
 import Logo from './components/Logo/Logo';
 import classes from './App.module.css';
-
-type Task = {
-  id: string;
-  name: string;
-  createdAt: string;
-  completed?: boolean;
-};
+import type { Task } from './components/types/Task';
+import TaskList from './components/Tasks/TaskList/TaskList';
 
 function App() {
   const [taskInputValue, setTaskInputValue] = useState('');
@@ -26,7 +21,7 @@ function App() {
     setError('');
 
     // Create a new task object
-    const newTask = {
+    const newTask: Task = {
       id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
       name: taskInputValue,
       createdAt: new Date().toISOString(),
@@ -44,6 +39,9 @@ function App() {
     setTaskInputValue(newValue);
   }
 
+  const tasksInProgress = tasks.filter((task) => task.completed === false);
+  const doneTasks = tasks.filter((task) => task.completed === true);
+
   return (
     <div className={classes.main}>
       <Logo />
@@ -53,10 +51,20 @@ function App() {
         onSubmit={handleSubmit}
         error={error}
       />
-      {tasks &&
-        tasks.map((task) => {
-          return <li key={task.id}>{task.name}</li>;
-        })}
+
+      <div className={classes.tasksContainer}>
+        
+        <section className={classes.tasksInProgress}>
+          <h2>In Progress</h2>
+          {tasksInProgress && <TaskList tasks={tasksInProgress} />}
+        </section>
+
+        <section className={classes.tasksDone}>
+          <h2>Done</h2>
+          {doneTasks && <TaskList tasks={doneTasks} />}
+        </section>
+      
+      </div>
     </div>
   );
 }

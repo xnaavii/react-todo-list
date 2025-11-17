@@ -5,3 +5,28 @@
   padding: 12px 30px;
   min-height: 100vh;
 }
+
+.tasksContainer {
+  width: 100%;
+  max-width: 630px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tasksContainer h2 {
+  font-size: var(--font-h6);
+  color: var(--font-primary);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.tasksInProgress h2 {
+  border-bottom: 1px solid #5BC0EB;
+}
+
+.tasksDone h2 {
+  border-bottom: 1px solid #73A17D;
+}
