@@ -18,12 +18,17 @@ function App() {
     setError('');
   }
 
+  function handleOnChange(newValue: string){
+    setError('')
+    setTaskInputValue(newValue);
+  }
+
   return (
     <div className={classes.main}>
       <Logo />
       <TaskInput
         value={taskInputValue}
-        onChange={setTaskInputValue}
+        onChange={handleOnChange}
         onSubmit={handleSubmit}
         error={error}
       />
