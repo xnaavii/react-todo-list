@@ -2,6 +2,7 @@
   max-width: 630px;
   width: 100%;
   margin: 0 auto;
+  position: relative;
 }
 
 .input {
@@ -13,6 +14,34 @@
   background-color: #ede8d0;
 }
 
+.error {
+  border-bottom: inset 2px var(--accent-orange);
+}
+
 .input::placeholder {
   color: var(--font-secondary);
+}
+
+.input:focus-within {
+  outline: none;
+}
+
+.form::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--grey-washed-out);
+  transition: width 0.2s ease;
+}
+
+.form:focus-within::after {
+  width: 100%;
+}
+
+.errorMessage {
+  color: var(--accent-orange);
+  font-size: var(--font-small);
 }

@@ -1,29 +1,25 @@
-import { useState } from 'react';
 import classes from './TaskInput.module.css';
 
 type TaskInputProps = {
   value: string;
+  error?: string;
   onChange: (newValue: string) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function TaskInput({ value, onChange }: TaskInputProps) {
-  const [error, setError] = useState<string>();
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setError('');
-    if (value === '') {
-      setError('Task name cannot be empty');
-    }
-  }
-
+export default function TaskInput({
+  value,
+  error,
+  onChange,
+  onSubmit,
+}: TaskInputProps) {
   return (
     <>
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={onSubmit}>
         <input
           aria-label="Add a task"
           placeholder="Add a task"
-          className={classes.input}
+          className={`${classes.input} ${error && classes.error}`}
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />
@@ -31,7 +27,7 @@ export default function TaskInput({ value, onChange }: TaskInputProps) {
           Add
         </button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p className={classes.errorMessage}>{error}</p>}
     </>
   );
 }
