@@ -11,7 +11,7 @@
   height: 32px;
   border: none;
   border-bottom: inset 2px var(--font-primary);
-  font-size: var(--font-small);
+  font-size: var(--font-p);
   background-color: #ede8d0;
 }
 
