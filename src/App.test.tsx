@@ -29,10 +29,22 @@ test('user can type in the input', async () => {
 });
 
 test('shows an error when submitting empty input', async () => {
-  render(<App/>);
+  render(<App />);
   const taskInput = screen.getByLabelText(/Add a task/i);
   await userEvent.type(taskInput, '{Enter}');
-  const errorMessage = screen.getByText(/Task name cannot be empty/i)
+  const errorMessage = screen.getByText(/Task name cannot be empty/i);
   expect(errorMessage).toBeInTheDocument();
+});
 
-})
+test('removes error message when typing', async () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+
+  await userEvent.type(taskInput, '{Enter}');
+  expect(screen.getByText(/Task name cannot be empty/i)).toBeInTheDocument();
+
+  await userEvent.type(taskInput, 'a');
+  expect(
+    screen.queryByText(/Task name cannot be empty/i)
+  ).not.toBeInTheDocument();
+});
