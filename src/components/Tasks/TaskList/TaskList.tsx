@@ -4,17 +4,27 @@ import classes from './TaskList.module.css';
 
 type TaskListProps = {
   tasks: Task[];
-  listName: string;
+  listName: 'In Progress' | 'Done';
 };
 
 export default function TaskList({ tasks, listName }: TaskListProps) {
-  if (!tasks.length) return <p className={classes.noTasks}>No tasks yet.</p>;
+  let style;
+
+  if (listName === 'In Progress') {
+    style = classes.InProgress;
+  } else if (listName === 'Done') {
+    style = classes.Done;
+  }
 
   return (
-    <ul className={classes.tasks} aria-label={listName}>
-      {tasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
-      ))}
-    </ul>
+    <section className={style}>
+      <h2>{listName}</h2>
+      {!tasks.length && <p className={classes.noTasks}>No tasks yet.</p>}
+      <ul className={classes.tasks} aria-label={listName}>
+        {tasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </ul>
+    </section>
   );
 }

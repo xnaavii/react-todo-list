@@ -22,11 +22,3 @@
   font-weight: 400;
   margin-bottom: 6px;
 }
-
-.tasksInProgress h2 {
-  border-bottom: 1px solid #5BC0EB;
-}
-
-.tasksDone h2 {
-  border-bottom: 1px solid #73A17D;
-}

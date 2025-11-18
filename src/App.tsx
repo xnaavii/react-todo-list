@@ -53,15 +53,8 @@ function App() {
       />
 
       <div className={classes.tasksContainer}>
-        <section className={classes.tasksInProgress}>
-          <h2>In Progress</h2>
-          <TaskList tasks={tasksInProgress} listName={'In Progress'} />
-        </section>
-
-        <section className={classes.tasksDone}>
-          <h2>Done</h2>
-          <TaskList tasks={doneTasks} listName={'Done'} />
-        </section>
+        <TaskList tasks={tasksInProgress} listName={'In Progress'} />
+        <TaskList tasks={doneTasks} listName={'Done'} />
       </div>
     </div>
   );

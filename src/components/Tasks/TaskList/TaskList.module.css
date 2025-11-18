@@ -12,3 +12,11 @@
   font-weight: 400;
   color: var(--font-tertiary);
 }
+
+.InProgress h2 {
+  border-bottom: 1px solid #5BC0EB;
+}
+
+.Done h2 {
+  border-bottom: 1px solid #73A17D;
+}
