@@ -1,3 +1,12 @@
+.isPending {
+  --accent: #5BC0EB;
+}
+
+.isDone {
+  --accent: #73A17D;
+  text-decoration: line-through;
+}
+
 .task {
   width: 100%;
   display: flex;
