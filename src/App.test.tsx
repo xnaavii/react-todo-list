@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -56,4 +56,14 @@ test('adds a new task to the list when the form is submitted', async () => {
 
   const taskElement = screen.getByText('Buy milk');
   expect(taskElement).toBeInTheDocument();
+});
+
+test('checks if new task is added to the in progress list', async () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, 'Buy milk{Enter}');
+
+  const inProgressList = screen.getByRole('list', { name: /in progress/i });
+
+  expect(within(inProgressList).getByText('Buy milk')).toBeInTheDocument();
 });
