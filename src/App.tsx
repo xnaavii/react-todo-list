@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TaskInput from './components/TaskInput/TaskInput';
 import Logo from './components/Logo/Logo';
 import classes from './App.module.css';
-import type { Task } from './components/types/Task';
+import type { Task } from './types/Task';
 import TaskList from './components/Tasks/TaskList/TaskList';
 
 function App() {
@@ -53,7 +53,6 @@ function App() {
       />
 
       <div className={classes.tasksContainer}>
-        
         <section className={classes.tasksInProgress}>
           <h2>In Progress</h2>
           {tasksInProgress && <TaskList tasks={tasksInProgress} />}
@@ -63,7 +62,6 @@ function App() {
           <h2>Done</h2>
           {doneTasks && <TaskList tasks={doneTasks} />}
         </section>
-      
       </div>
     </div>
   );
