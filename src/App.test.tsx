@@ -67,3 +67,20 @@ test('checks if new task is added to the in progress list', async () => {
 
   expect(within(inProgressList).getByText('Buy milk')).toBeInTheDocument();
 });
+
+test('checks if task is marked as a complete and moved to the Done list', async () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, 'Buy milk{Enter}');
+
+  const inProgressList = screen.getByRole('list', { name: /in progress/i });
+  expect(within(inProgressList).getByText('Buy milk')).toBeInTheDocument();
+
+  const toggleButton = within(inProgressList).getByRole('button', {
+    name: /mark as complete/i,
+  });
+  await userEvent.click(toggleButton);
+
+  const doneList = screen.getByRole('list', { name: /done/i });
+  expect(within(doneList).getByText('Buy milk')).toBeInTheDocument();
+});
