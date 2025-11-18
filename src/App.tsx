@@ -39,6 +39,14 @@ function App() {
     setTaskInputValue(newValue);
   }
 
+  function toggleDone(id: string) {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  }
+
   const tasksInProgress = tasks.filter((task) => task.completed === false);
   const doneTasks = tasks.filter((task) => task.completed === true);
 
@@ -53,8 +61,12 @@ function App() {
       />
 
       <div className={classes.tasksContainer}>
-        <TaskList tasks={tasksInProgress} listName={'In Progress'} />
-        <TaskList tasks={doneTasks} listName={'Done'} />
+        <TaskList
+          tasks={tasksInProgress}
+          listName={'In Progress'}
+          onToggle={toggleDone}
+        />
+        <TaskList tasks={doneTasks} listName={'Done'} onToggle={toggleDone} />
       </div>
     </div>
   );

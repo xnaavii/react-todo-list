@@ -3,9 +3,10 @@ import classes from './TaskItem.module.css';
 
 type TaskItemProps = {
   task: Task;
+  onToggle: (id: string) => void;
 };
 
-export default function TaskItem({ task }: TaskItemProps) {
+export default function TaskItem({ task, onToggle }: TaskItemProps) {
   return (
     <li
       className={`${classes.task} ${
@@ -18,6 +19,8 @@ export default function TaskItem({ task }: TaskItemProps) {
         className={`${classes.button} ${
           task.completed ? classes.isDone : classes.isPending
         }`}
+        aria-label={task.completed ? 'Mark as incomplete' : 'Mark as complete'}
+        onClick={() => onToggle(task.id)}
       />
     </li>
   );
