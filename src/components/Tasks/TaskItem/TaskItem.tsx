@@ -21,7 +21,11 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       <span className={classes.taskName}>{task.name}</span>
       <menu className={classes.buttons}>
         <button aria-label="Delete task" className={classes.button}>
-          <IoTrashOutline size={24} />
+          <IoTrashOutline
+            size={24}
+            className={classes.deleteButton}
+            strokeWidth={1.72}
+          />
         </button>
         <button
           className={classes.button}

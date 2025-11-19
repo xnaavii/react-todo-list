@@ -32,10 +32,16 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding: 6px;
 }
 
 .button:hover {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+.deleteButton {
+  stroke: var(--accent-orange);
+  color: var(--accent-orange);
 }
 
 .buttons {
