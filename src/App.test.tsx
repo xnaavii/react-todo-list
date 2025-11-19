@@ -99,3 +99,19 @@ test('shows a remove button on a task item for task removal', async () => {
 
   expect(removeButton).toBeInTheDocument();
 });
+
+test('remove button deletes a task', async () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, 'Buy milk{Enter}');
+
+  const taskItem = screen.getByText('Buy milk').closest('li');
+  expect(taskItem).toBeInTheDocument();
+
+  const removeButton = within(taskItem as HTMLElement).getByRole('button', {
+    name: /delete task/i,
+  });
+
+  await userEvent.click(removeButton);
+  expect(screen.queryByText(/Buy milk/i)).not.toBeInTheDocument();
+});
