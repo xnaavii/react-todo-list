@@ -84,3 +84,18 @@ test('checks if task is marked as a complete and moved to the Done list', async 
   const doneList = screen.getByRole('list', { name: /done/i });
   expect(within(doneList).getByText('Buy milk')).toBeInTheDocument();
 });
+
+test('shows a remove button on a task item for task removal', async () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, 'Buy milk{Enter}');
+
+  const taskItem = screen.getByText('Buy milk').closest('li');
+  expect(taskItem).toBeInTheDocument();
+
+  const removeButton = within(taskItem as HTMLElement).getByRole('button', {
+    name: /delete task/i,
+  });
+
+  expect(removeButton).toBeInTheDocument();
+});
