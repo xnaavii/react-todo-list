@@ -37,3 +37,10 @@
 .button:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
