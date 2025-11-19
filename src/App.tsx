@@ -47,6 +47,11 @@ function App() {
     );
   }
 
+  // Function that remove a task with the id passed in
+  function deleteTask(id: string) {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  }
+
   const tasksInProgress = tasks.filter((task) => task.completed === false);
   const doneTasks = tasks.filter((task) => task.completed === true);
 
@@ -65,8 +70,14 @@ function App() {
           tasks={tasksInProgress}
           listName={'In Progress'}
           onToggle={toggleDone}
+          onDelete={deleteTask}
         />
-        <TaskList tasks={doneTasks} listName={'Done'} onToggle={toggleDone} />
+        <TaskList
+          tasks={doneTasks}
+          listName={'Done'}
+          onToggle={toggleDone}
+          onDelete={deleteTask}
+        />
       </div>
     </div>
   );

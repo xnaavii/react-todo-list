@@ -9,9 +9,10 @@ import {
 type TaskItemProps = {
   task: Task;
   onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
 };
 
-export default function TaskItem({ task, onToggle }: TaskItemProps) {
+export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   return (
     <li
       className={`${classes.task} ${
@@ -19,14 +20,27 @@ export default function TaskItem({ task, onToggle }: TaskItemProps) {
       }`}
     >
       <span className={classes.taskName}>{task.name}</span>
+      {/* Buttons */}
       <menu className={classes.buttons}>
-        <button aria-label="Delete task" className={classes.button}>
+        {/* 
+        Delete button
+        used to remove a task
+        */}
+        <button
+          aria-label="Delete task"
+          className={classes.button}
+          onClick={() => onDelete(task.id)}
+        >
           <IoTrashOutline
             size={24}
             className={classes.deleteButton}
             strokeWidth={1.72}
           />
         </button>
+        {/* 
+        Toggle task completion button
+        Changes depending on the task status
+        */}
         <button
           className={classes.button}
           aria-label={
