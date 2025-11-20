@@ -5,6 +5,7 @@ import {
   IoEllipseOutline,
   IoTrashOutline,
 } from 'react-icons/io5';
+import { motion } from 'framer-motion';
 
 type TaskItemProps = {
   task: Task;
@@ -14,7 +15,17 @@ type TaskItemProps = {
 
 export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   return (
-    <li
+    <motion.li
+      key={task.id}
+      layout
+      initial={{ opacity: 0, y: -10 }}
+      animate={{
+        opacity: task.completed ? 0.5 : 1,
+        y: 0,
+        scale: task.completed ? 0.98 : 1,
+      }}
+      exit={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.2 }}
       className={`${classes.task} ${
         task.completed ? classes.isDone : classes.isPending
       }`}
@@ -67,6 +78,6 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
           )}
         </button>
       </menu>
-    </li>
+    </motion.li>
   );
 }

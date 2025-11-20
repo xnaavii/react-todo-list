@@ -1,6 +1,7 @@
 .tasks {
   max-width: 630px;
   width: 100%;
+  min-height: 52px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

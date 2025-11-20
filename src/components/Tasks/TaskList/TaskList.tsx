@@ -1,6 +1,7 @@
 import type { Task } from '../../../types/Task';
 import TaskItem from '../TaskItem/TaskItem';
 import classes from './TaskList.module.css';
+import { AnimatePresence } from 'framer-motion';
 
 type TaskListProps = {
   tasks: Task[];
@@ -9,7 +10,12 @@ type TaskListProps = {
   onDelete: (id: string) => void;
 };
 
-export default function TaskList({ tasks, listName, onToggle, onDelete }: TaskListProps) {
+export default function TaskList({
+  tasks,
+  listName,
+  onToggle,
+  onDelete,
+}: TaskListProps) {
   let style;
 
   if (listName === 'In Progress') {
@@ -23,9 +29,16 @@ export default function TaskList({ tasks, listName, onToggle, onDelete }: TaskLi
       <h2 className={classes.title}>{listName}</h2>
       {!tasks.length && <p className={classes.noTasks}>No tasks yet.</p>}
       <ul className={classes.tasks} aria-label={listName}>
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} onToggle={onToggle} onDelete={onDelete}/>
-        ))}
+        <AnimatePresence>
+          {tasks.map((task) => (
+            <TaskItem
+              key={task.id}
+              task={task}
+              onToggle={onToggle}
+              onDelete={onDelete}
+            />
+          ))}
+        </AnimatePresence>
       </ul>
     </section>
   );
