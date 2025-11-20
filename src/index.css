@@ -12,9 +12,14 @@
   --accent-orange: #F0692B;
   --accent-green: #73A17D;
   --font-primary: #333333;
-  --font-secondary: #666666;
-  --font-tertiary: #444444;
+  --font-secondary: #343a40;
+  --font-tertiary: #495057;
   --grey-washed-out: #CCCCCC;
+  --grey-500: #212529;
+  --grey-400: #343a40;
+  --grey-300: #495057;
+  --grey-200: #868e96;
+  --grey-100: #adb5bd;
 
   --font-small: 0.833rem;
   --font-p: 1rem;

@@ -5,6 +5,11 @@
 .isDone {
   --accent: #73A17D;
   text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.isDone:hover {
+  opacity: 1;
 }
 
 .task {
@@ -16,12 +21,15 @@
   background-color: var(--secondary-color);
   list-style-type: none;
   border-left: 4px solid var(--accent, transparent);
+  max-width: 630px;
 }
 
 .taskName {
   font-size: var(--font-p);
   font-weight: 400;
-  color: var(--font-tertiary);
+  color: var(--grey-400);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .button {

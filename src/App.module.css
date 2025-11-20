@@ -9,11 +9,10 @@
 .tasksContainer {
   width: 100%;
   max-width: 630px;
-  margin: 0 auto;
+  margin: 16px auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 24px;
 }
 
 .tasksContainer h2 {

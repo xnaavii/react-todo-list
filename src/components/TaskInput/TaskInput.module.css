@@ -8,11 +8,12 @@
 .input {
   padding: 0 12px;
   width: 100%;
-  height: 32px;
+  height: 38px;
   border: none;
-  border-bottom: inset 2px var(--font-primary);
+  border-bottom: inset 1px var(--grey-500);
   font-size: var(--font-p);
-  background-color: #ede8d0;
+  background-color: var(--secondary-color);
+  transition: all ease 100ms;
 }
 
 .error {
@@ -20,7 +21,7 @@
 }
 
 .input::placeholder {
-  color: var(--font-secondary);
+  color: var(--grey-200);
 }
 
 .input:focus-within {
@@ -33,8 +34,8 @@
   left: 0;
   bottom: 0;
   width: 0%;
-  height: 2px;
-  background: var(--grey-washed-out);
+  height: 1px;
+  background: var(--grey-100);
   transition: width 0.2s ease;
 }
 

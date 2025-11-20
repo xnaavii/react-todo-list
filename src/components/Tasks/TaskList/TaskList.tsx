@@ -20,7 +20,7 @@ export default function TaskList({ tasks, listName, onToggle, onDelete }: TaskLi
 
   return (
     <section className={style}>
-      <h2>{listName}</h2>
+      <h2 className={classes.title}>{listName}</h2>
       {!tasks.length && <p className={classes.noTasks}>No tasks yet.</p>}
       <ul className={classes.tasks} aria-label={listName}>
         {tasks.map((task) => (

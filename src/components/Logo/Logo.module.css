@@ -7,8 +7,8 @@
 }
 
 .logoImg {
-  width: 240px;
-  height: 240px;
+  width: 180px;
+  height: 180px;
 }
 
 .logoImg img {
@@ -16,7 +16,7 @@
 }
 
 .logoText {
-  font-size: var(--font-h2);
-  font-weight: 400;
-  color: var(--font-tertiary);
+  font-size: var(--font-h3);
+  font-weight: 500;
+  color: var(--grey-500);
 }

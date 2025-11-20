@@ -10,13 +10,19 @@
 .noTasks {
   font-size: var(--font-small);
   font-weight: 400;
-  color: var(--font-tertiary);
+  color: var(--grey-200);
 }
 
 .InProgress h2 {
   border-bottom: 1px solid #5BC0EB;
+  font-size: var(--font-h5);
+  color: var(--grey-500);
+  font-weight: 500;
 }
 
 .Done h2 {
   border-bottom: 1px solid #73A17D;
+  font-size: var(--font-h5);
+  color: var(--grey-500);
+  font-weight: 500;
 }
