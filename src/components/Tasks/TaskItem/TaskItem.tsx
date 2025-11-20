@@ -13,6 +13,9 @@ type TaskItemProps = {
   onDelete: (id: string) => void;
 };
 
+const exitAnimation =
+  process.env.NODE_ENV === 'test' ? {} : { opacity: 0, y: 6 };
+
 export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   return (
     <motion.li
@@ -24,7 +27,7 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         y: 0,
         scale: task.completed ? 0.98 : 1,
       }}
-      exit={{ opacity: 0, y: 10 }}
+      exit={exitAnimation}
       transition={{ duration: 0.2 }}
       className={`${classes.task} ${
         task.completed ? classes.isDone : classes.isPending
