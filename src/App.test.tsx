@@ -1,4 +1,9 @@
-import { render, screen, within } from '@testing-library/react';
+import {
+  render,
+  screen,
+  within,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -115,4 +120,25 @@ test('remove button opens alert dialog', async () => {
 
   const alertModal = screen.getByRole('dialog', { name: /delete alert/i });
   expect(alertModal).toBeInTheDocument();
+});
+
+test('cancel button closes alert dialog', async () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, 'Buy milk{Enter}');
+  const taskItem = screen.getByText('Buy milk').closest('li');
+  expect(taskItem).toBeInTheDocument();
+  const removeButton = within(taskItem as HTMLElement).getByRole('button', {
+    name: /delete task/i,
+  });
+  await userEvent.click(removeButton);
+  const alertModal = screen.getByRole('dialog', { name: /delete alert/i });
+  expect(alertModal).toBeInTheDocument();
+  const cancelButton = within(alertModal).getByRole('button', {
+    name: /cancel/i,
+  });
+  await userEvent.click(cancelButton);
+  await waitForElementToBeRemoved(() =>
+    screen.queryByRole('dialog', { name: /delete alert/i })
+  );
 });
