@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import TaskInput from './components/TaskInput/TaskInput';
 import Logo from './components/Logo/Logo';
 import classes from './App.module.css';
 import type { Task } from './types/Task';
 import TaskList from './components/Tasks/TaskList/TaskList';
+import Modal from './components/Modal/Modal';
 
 function App() {
   const [taskInputValue, setTaskInputValue] = useState('');
   const [error, setError] = useState<string>();
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -47,9 +51,10 @@ function App() {
     );
   }
 
-  // Function that remove a task with the id passed in
-  function deleteTask(id: string) {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+  function handleStartDeleteTask() {
+    if (dialogRef.current !== null) {
+      dialogRef.current.showModal();
+    }
   }
 
   const tasksInProgress = tasks.filter((task) => task.completed === false);
@@ -70,15 +75,16 @@ function App() {
           tasks={tasksInProgress}
           listName={'In Progress'}
           onToggle={toggleDone}
-          onDelete={deleteTask}
+          onDelete={handleStartDeleteTask}
         />
         <TaskList
           tasks={doneTasks}
           listName={'Done'}
           onToggle={toggleDone}
-          onDelete={deleteTask}
+          onDelete={handleStartDeleteTask}
         />
       </div>
+      <Modal ref={dialogRef} />
     </div>
   );
 }
