@@ -1,7 +1,6 @@
 import type { Task } from '../../../types/Task';
 import TaskItem from '../TaskItem/TaskItem';
 import classes from './TaskList.module.css';
-import { AnimatePresence } from 'framer-motion';
 
 type TaskListProps = {
   tasks: Task[];
@@ -29,7 +28,6 @@ export default function TaskList({
       <h2 className={classes.title}>{listName}</h2>
       {!tasks.length && <p className={classes.noTasks}>No tasks yet.</p>}
       <ul className={classes.tasks} aria-label={listName}>
-        <AnimatePresence>
           {tasks.map((task) => (
             <TaskItem
               key={task.id}
@@ -38,7 +36,6 @@ export default function TaskList({
               onDelete={onDelete}
             />
           ))}
-        </AnimatePresence>
       </ul>
     </section>
   );

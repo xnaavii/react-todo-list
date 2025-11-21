@@ -26,6 +26,7 @@
 
 .input:focus-within {
   outline: none;
+  background: #EDE8D0;
 }
 
 .form::after {

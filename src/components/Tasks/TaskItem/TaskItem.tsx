@@ -5,7 +5,6 @@ import {
   IoEllipseOutline,
   IoTrashOutline,
 } from 'react-icons/io5';
-import { motion } from 'framer-motion';
 
 type TaskItemProps = {
   task: Task;
@@ -13,22 +12,10 @@ type TaskItemProps = {
   onDelete: (id: string) => void;
 };
 
-const exitAnimation =
-  process.env.NODE_ENV === 'test' ? {} : { opacity: 0, y: 6 };
-
 export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   return (
-    <motion.li
+    <li
       key={task.id}
-      layout
-      initial={{ opacity: 0, y: -10 }}
-      animate={{
-        opacity: task.completed ? 0.5 : 1,
-        y: 0,
-        scale: task.completed ? 0.98 : 1,
-      }}
-      exit={exitAnimation}
-      transition={{ duration: 0.2 }}
       className={`${classes.task} ${
         task.completed ? classes.isDone : classes.isPending
       }`}
@@ -81,6 +68,6 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
           )}
         </button>
       </menu>
-    </motion.li>
+    </li>
   );
 }
