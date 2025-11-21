@@ -8,3 +8,13 @@ if (window.HTMLDialogElement && !window.HTMLDialogElement.prototype.showModal) {
     },
   });
 }
+
+
+if (window.HTMLDialogElement && !window.HTMLDialogElement.prototype.close) {
+  Object.defineProperty(window.HTMLDialogElement.prototype, 'close', {
+    writable: true,
+    value: function close() {
+      this.close = true;
+    },
+  });
+}

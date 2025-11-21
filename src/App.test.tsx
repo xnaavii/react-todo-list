@@ -2,7 +2,6 @@ import {
   render,
   screen,
   within,
-  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
@@ -138,7 +137,5 @@ test('cancel button closes alert dialog', async () => {
     name: /cancel/i,
   });
   await userEvent.click(cancelButton);
-  await waitForElementToBeRemoved(() =>
-    screen.queryByRole('dialog', { name: /delete alert/i })
-  );
+  expect(alertModal).not.toBeInTheDocument();
 });
