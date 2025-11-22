@@ -152,7 +152,7 @@ test('closes alert dialog when clicking outside', async () => {
     screen.getByRole('dialog', { name: /delete alert/i })
   ).toBeInTheDocument();
 
-  await userEvent.click(document.body);
+  await userEvent.click(screen.getByRole('dialog', { name: /delete alert/i }));
 
   expect(
     screen.queryByRole('dialog', { name: /delete alert/i })

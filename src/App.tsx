@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import TaskInput from './components/TaskInput/TaskInput';
 import Logo from './components/Logo/Logo';
 import classes from './App.module.css';
@@ -58,10 +58,31 @@ function App() {
     setTimeout(() => dialogRef.current?.showModal(), 0);
   }
 
-  function handleCancelDeleteTask() {
+  const handleCancelDeleteTask = useCallback(function handleCancelDeleteTask() {
     dialogRef.current?.close();
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    // Handler for clicks on the dialog element
+    function handleDialogMouseDown(e: MouseEvent) {
+      if (e.target === dialog) {
+        dialogRef.current?.close();
+        setIsOpen(false);
+      }
+    }
+
+    // Attach listener to the dialog
+    dialog.addEventListener('mousedown', handleDialogMouseDown);
+
+    // Cleanup on unmount
+    return () => {
+      dialog.removeEventListener('mousedown', handleDialogMouseDown);
+    };
+  }, [dialogRef, isOpen]);
 
   const tasksInProgress = tasks.filter((task) => task.completed === false);
   const doneTasks = tasks.filter((task) => task.completed === true);
