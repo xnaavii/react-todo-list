@@ -34,7 +34,7 @@ function App() {
     };
 
     // Add a new task to the list
-    setTasks([...tasks, newTask]);
+    setTasks((prev) => [...prev, newTask]);
     // Clear the input field after
     setTaskInputValue('');
   }
@@ -52,6 +52,12 @@ function App() {
     );
   }
 
+  function handleDeleteTask() {
+    setTasks((prev) => prev.filter((task) => task.id !== taskToRemoveId));
+    dialogRef.current?.close();
+    setIsOpen(false);
+  }
+
   function handleStartDeleteTask(id: string) {
     setIsOpen(true);
     setTaskToRemoveId(id);
@@ -59,15 +65,10 @@ function App() {
     setTimeout(() => dialogRef.current?.showModal(), 0);
   }
 
-  function handleDeleteTask() {
-    setTasks((prev) => prev.filter((task) => task.id !== taskToRemoveId));
+  const handleStopDeleteTask = useCallback(function handleStopDeleteTask() {
     dialogRef.current?.close();
     setIsOpen(false);
-  }
-
-  const handleCancelDeleteTask = useCallback(function handleCancelDeleteTask() {
-    dialogRef.current?.close();
-    setIsOpen(false);
+    setTaskToRemoveId('');
   }, []);
 
   useEffect(() => {
@@ -77,8 +78,7 @@ function App() {
     // Handler for clicks on the dialog element
     function handleDialogMouseDown(e: MouseEvent) {
       if (e.target === dialog) {
-        dialogRef.current?.close();
-        setIsOpen(false);
+        handleStopDeleteTask();
       }
     }
 
@@ -89,7 +89,7 @@ function App() {
     return () => {
       dialog.removeEventListener('mousedown', handleDialogMouseDown);
     };
-  }, [dialogRef, isOpen]);
+  }, [dialogRef, isOpen, handleStopDeleteTask]);
 
   const tasksInProgress = tasks.filter((task) => task.completed === false);
   const doneTasks = tasks.filter((task) => task.completed === true);
@@ -121,7 +121,7 @@ function App() {
       {isOpen && (
         <Modal
           ref={dialogRef}
-          onClose={handleCancelDeleteTask}
+          onClose={handleStopDeleteTask}
           onConfirm={handleDeleteTask}
         />
       )}
