@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { Task } from '../../../types/Task';
 import classes from './TaskItem.module.css';
 import {
@@ -24,12 +24,30 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
     style += ` ${classes.selected}`;
   }
 
+  const liRef = useRef<HTMLLIElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      const li = liRef.current;
+      if (li && !li.contains(e.target as Node) && selected) {
+        setSelected(false);
+      }
+    }
+
+    document.body.addEventListener('click', handleClick);
+
+    return () => {
+      document.body.removeEventListener('click', handleClick);
+    };
+  }, [selected]);
+
   return (
     <li
       key={task.id}
       className={style}
       data-selected={selected}
       onClick={() => setSelected(!selected)}
+      ref={liRef}
     >
       <span className={classes.taskName}>{task.name}</span>
       {/* Buttons */}
