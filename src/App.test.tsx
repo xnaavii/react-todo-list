@@ -1,8 +1,4 @@
-import {
-  render,
-  screen,
-  within,
-} from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -138,4 +134,27 @@ test('cancel button closes alert dialog', async () => {
   });
   await userEvent.click(cancelButton);
   expect(alertModal).not.toBeInTheDocument();
+});
+
+test('closes alert dialog when clicking outside', async () => {
+  render(<App />);
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, 'Buy milk{Enter}');
+  const taskItem = screen.getByText('Buy milk').closest('li');
+  expect(taskItem).toBeInTheDocument();
+
+  const removeButton = within(taskItem!).getByRole('button', {
+    name: /delete task/i,
+  });
+  await userEvent.click(removeButton);
+
+  expect(
+    screen.getByRole('dialog', { name: /delete alert/i })
+  ).toBeInTheDocument();
+
+  await userEvent.click(document.body);
+
+  expect(
+    screen.queryByRole('dialog', { name: /delete alert/i })
+  ).not.toBeInTheDocument();
 });
