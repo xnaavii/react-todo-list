@@ -179,3 +179,12 @@ test('clicking on confirm button removes a task', async () => {
   expect(alertModal).not.toBeInTheDocument();
   expect(screen.queryByText('Buy milk')).not.toBeInTheDocument();
 });
+
+test('clicking on a task selects it', async () => {
+  render(<App />);
+  const taskItem = await addTask('Buy milk');
+  expect(taskItem).toBeInTheDocument();
+
+  await userEvent.click(taskItem);
+  expect(taskItem).toHaveClass('selected');
+});
