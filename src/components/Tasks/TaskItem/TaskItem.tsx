@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Task } from '../../../types/Task';
 import classes from './TaskItem.module.css';
 import {
@@ -13,12 +14,22 @@ type TaskItemProps = {
 };
 
 export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
+  const [selected, setSelected] = useState(false);
+
+  let style = `${classes.task} ${
+    task.completed ? classes.isDone : classes.isPending
+  }`;
+
+  if (selected) {
+    style += ` ${classes.selected}`;
+  }
+
   return (
     <li
       key={task.id}
-      className={`${classes.task} ${
-        task.completed ? classes.isDone : classes.isPending
-      }`}
+      className={style}
+      data-selected={selected}
+      onClick={() => setSelected(!selected)}
     >
       <span className={classes.taskName}>{task.name}</span>
       {/* Buttons */}

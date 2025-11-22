@@ -186,5 +186,5 @@ test('clicking on a task selects it', async () => {
   expect(taskItem).toBeInTheDocument();
 
   await userEvent.click(taskItem);
-  expect(taskItem).toHaveClass('selected');
+  expect(taskItem).toHaveAttribute('data-selected', 'true');
 });
