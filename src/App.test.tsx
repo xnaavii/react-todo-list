@@ -2,6 +2,15 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
+async function addTask(taskName: string) {
+  const taskInput = screen.getByLabelText(/Add a task/i);
+  await userEvent.type(taskInput, `${taskName}{Enter}`);
+
+  const taskItem = screen.getByText(taskName).closest('li');
+  expect(taskItem).toBeInTheDocument();
+  return taskItem as HTMLElement;
+}
+
 test('renders the app', () => {
   render(<App />);
   expect(screen.getByText(/To-Do List/i)).toBeInTheDocument();
@@ -51,11 +60,9 @@ test('removes error message when typing', async () => {
 
 test('adds a new task to the list when the form is submitted', async () => {
   render(<App />);
-  const taskInput = screen.getByLabelText(/Add a task/i);
-  await userEvent.type(taskInput, 'Buy milk{Enter}');
 
-  const taskElement = screen.getByText('Buy milk');
-  expect(taskElement).toBeInTheDocument();
+  const taskItem = await addTask('Buy milk');
+  expect(taskItem).toBeInTheDocument();
 });
 
 test('checks if new task is added to the in progress list', async () => {
@@ -87,10 +94,8 @@ test('checks if task is marked as a complete and moved to the Done list', async 
 
 test('shows a remove button on a task item for task removal', async () => {
   render(<App />);
-  const taskInput = screen.getByLabelText(/Add a task/i);
-  await userEvent.type(taskInput, 'Buy milk{Enter}');
 
-  const taskItem = screen.getByText('Buy milk').closest('li');
+  const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
 
   const removeButton = within(taskItem as HTMLElement).getByRole('button', {
@@ -102,10 +107,8 @@ test('shows a remove button on a task item for task removal', async () => {
 
 test('remove button opens alert dialog', async () => {
   render(<App />);
-  const taskInput = screen.getByLabelText(/Add a task/i);
-  await userEvent.type(taskInput, 'Buy milk{Enter}');
 
-  const taskItem = screen.getByText('Buy milk').closest('li');
+  const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
 
   const removeButton = within(taskItem as HTMLElement).getByRole('button', {
@@ -119,10 +122,8 @@ test('remove button opens alert dialog', async () => {
 
 test('cancel button closes alert dialog', async () => {
   render(<App />);
-  const taskInput = screen.getByLabelText(/Add a task/i);
-  await userEvent.type(taskInput, 'Buy milk{Enter}');
-  const taskItem = screen.getByText('Buy milk').closest('li');
-  expect(taskItem).toBeInTheDocument();
+  const taskItem = await addTask('Buy milk');
+
   const removeButton = within(taskItem as HTMLElement).getByRole('button', {
     name: /delete task/i,
   });
@@ -138,9 +139,7 @@ test('cancel button closes alert dialog', async () => {
 
 test('closes alert dialog when clicking outside', async () => {
   render(<App />);
-  const taskInput = screen.getByLabelText(/Add a task/i);
-  await userEvent.type(taskInput, 'Buy milk{Enter}');
-  const taskItem = screen.getByText('Buy milk').closest('li');
+  const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
 
   const removeButton = within(taskItem!).getByRole('button', {
@@ -157,4 +156,26 @@ test('closes alert dialog when clicking outside', async () => {
   expect(
     screen.queryByRole('dialog', { name: /delete alert/i })
   ).not.toBeInTheDocument();
+});
+
+test('clicking on confirm button removes a task', async () => {
+  render(<App />);
+  const taskItem = await addTask('Buy milk');
+  expect(taskItem).toBeInTheDocument();
+
+  const removeButton = within(taskItem as HTMLElement).getByRole('button', {
+    name: /delete task/i,
+  });
+  await userEvent.click(removeButton);
+
+  const alertModal = screen.getByRole('dialog', { name: /delete alert/i });
+  expect(alertModal).toBeInTheDocument();
+
+  const confirmButton = within(alertModal).getByRole('button', {
+    name: /cancel/i,
+  });
+  await userEvent.click(confirmButton);
+
+  expect(alertModal).not.toBeInTheDocument();
+  expect(screen.queryByText('Buy milk')).not.toBeInTheDocument();
 });
