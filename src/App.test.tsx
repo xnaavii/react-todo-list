@@ -172,7 +172,7 @@ test('clicking on confirm button removes a task', async () => {
   expect(alertModal).toBeInTheDocument();
 
   const confirmButton = within(alertModal).getByRole('button', {
-    name: /cancel/i,
+    name: /confirm/i,
   });
   await userEvent.click(confirmButton);
 

@@ -11,6 +11,7 @@ function App() {
   const [error, setError] = useState<string>();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [taskToRemoveId, setTaskToRemoveId] = useState('');
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -51,11 +52,17 @@ function App() {
     );
   }
 
-  function handleStartDeleteTask() {
+  function handleStartDeleteTask(id: string) {
     setIsOpen(true);
-
+    setTaskToRemoveId(id);
     // Show modal once mounted after a delay
     setTimeout(() => dialogRef.current?.showModal(), 0);
+  }
+
+  function handleDeleteTask() {
+    setTasks((prev) => prev.filter((task) => task.id !== taskToRemoveId));
+    dialogRef.current?.close();
+    setIsOpen(false);
   }
 
   const handleCancelDeleteTask = useCallback(function handleCancelDeleteTask() {
@@ -111,7 +118,13 @@ function App() {
           onDelete={handleStartDeleteTask}
         />
       </div>
-      {isOpen && <Modal ref={dialogRef} onClose={handleCancelDeleteTask} />}
+      {isOpen && (
+        <Modal
+          ref={dialogRef}
+          onClose={handleCancelDeleteTask}
+          onConfirm={handleDeleteTask}
+        />
+      )}
     </div>
   );
 }
