@@ -13,14 +13,6 @@ function App() {
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  function handleEditTask(id: string, newTaskName: string) {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, name: newTaskName } : task
-      )
-    );
-  }
-
   function handleDeleteTask() {
     setTasks((prev) => prev.filter((task) => task.id !== taskToRemoveId));
     dialogRef.current?.close();
@@ -73,13 +65,11 @@ function App() {
           tasks={tasksInProgress}
           listName={'In Progress'}
           onDelete={handleStartDeleteTask}
-          onEdit={handleEditTask}
         />
         <TaskList
           tasks={doneTasks}
           listName={'Done'}
           onDelete={handleStartDeleteTask}
-          onEdit={handleEditTask}
         />
       </div>
       {isOpen && (

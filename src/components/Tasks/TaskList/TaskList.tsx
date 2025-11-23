@@ -6,14 +6,12 @@ type TaskListProps = {
   tasks: Task[];
   listName: 'In Progress' | 'Done';
   onDelete: (id: string) => void;
-  onEdit: (id: string, newValue: string) => void;
 };
 
 export default function TaskList({
   tasks,
   listName,
   onDelete,
-  onEdit
 }: TaskListProps) {
   let style;
 
@@ -33,7 +31,6 @@ export default function TaskList({
             key={task.id}
             task={task}
             onDelete={onDelete}
-            onEdit={onEdit}
           />
         ))}
       </ul>

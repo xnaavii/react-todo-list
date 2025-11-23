@@ -13,10 +13,9 @@ import { useTodos } from '../../../hooks/useTodos';
 type TaskItemProps = {
   task: Task;
   onDelete: (id: string) => void;
-  onEdit: (id: string, newTaskName: string) => void;
 };
 
-export default function TaskItem({ task, onDelete, onEdit }: TaskItemProps) {
+export default function TaskItem({ task, onDelete }: TaskItemProps) {
   const [selected, setSelected] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -56,7 +55,6 @@ export default function TaskItem({ task, onDelete, onEdit }: TaskItemProps) {
     return (
       <TaskEdit
         task={task}
-        onEdit={onEdit}
         setIsEditing={setIsEditing}
         ref={inputRef}
       />

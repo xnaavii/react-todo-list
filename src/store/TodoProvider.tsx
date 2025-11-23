@@ -6,6 +6,7 @@ export type TodoContextType = {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   toggleComplete: (id: string) => void;
   createTask: (taskName: string) => void;
+  editTask: (id: string, newTaskName: string) => void;
 };
 
 type TodoProviderProps = {
@@ -43,10 +44,24 @@ export default function TodoProvider({ children }: TodoProviderProps) {
     setTasks((prev) => [...prev, newTask]);
   }
 
+  function editTask(id: string, newTaskName: string) {
+    /* 
+    Takes newTaskName and id as an argument
+    finds the task and edits the name property with
+    the newTaskName
+    */
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, name: newTaskName } : task
+      )
+    );
+  }
+
   const value = {
     tasks,
     setTasks,
     createTask,
+    editTask,
     toggleComplete,
   };
 

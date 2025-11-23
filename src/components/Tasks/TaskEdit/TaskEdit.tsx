@@ -1,22 +1,18 @@
 import classes from './TaskEdit.module.css';
 import type { Task } from '../../../types/Task';
 import { useState, type FormEvent, type Ref } from 'react';
+import { useTodos } from '../../../hooks/useTodos';
 
 type TaskEditProps = {
   task: Task;
-  onEdit: (id: string, newTaskName: string) => void;
   setIsEditing: (arg0: boolean) => void;
   ref: Ref<HTMLInputElement>;
 };
 
-export default function TaskEdit({
-  task,
-  onEdit,
-  setIsEditing,
-  ref,
-}: TaskEditProps) {
+export default function TaskEdit({ task, setIsEditing, ref }: TaskEditProps) {
   const [value, setValue] = useState(task.name);
   const [error, setError] = useState('');
+  const { editTask } = useTodos();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -27,7 +23,7 @@ export default function TaskEdit({
       return;
     }
 
-    onEdit(task.id, value);
+    editTask(task.id, value);
     setIsEditing(false);
   }
 
