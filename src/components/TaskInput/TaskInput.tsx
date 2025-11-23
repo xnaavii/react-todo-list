@@ -1,34 +1,24 @@
 import { useState } from 'react';
 import classes from './TaskInput.module.css';
 import { useTodos } from '../../hooks/useTodos';
-import type { Task } from '../../types/Task';
 
 export default function TaskInput() {
-  const { setTasks } = useTodos();
-
   const [taskInputValue, setTaskInputValue] = useState('');
   const [error, setError] = useState<string>();
+  const { createTask } = useTodos();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setError('');
 
     if (taskInputValue.trim() === '') {
       setError('Task name cannot be empty.');
       return;
     }
 
-    setError('');
+    // Create a new task by passing in the current input value as name
+    createTask(taskInputValue);
 
-    // Create a new task object
-    const newTask: Task = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-      name: taskInputValue,
-      createdAt: new Date().toISOString(),
-      completed: false,
-    };
-
-    // Add a new task to the list
-    setTasks((prev) => [...prev, newTask]);
     // Clear the input field after
     setTaskInputValue('');
   }

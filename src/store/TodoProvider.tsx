@@ -5,6 +5,7 @@ export type TodoContextType = {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   toggleComplete: (id: string) => void;
+  createTask: (taskName: string) => void;
 };
 
 type TodoProviderProps = {
@@ -25,9 +26,27 @@ export default function TodoProvider({ children }: TodoProviderProps) {
     );
   }
 
+  function createTask(taskName: string) {
+    /* 
+    Takes taskName as an argument and
+    uses it to create a new object with
+    taskName as a value for the name property
+    */
+    const newTask: Task = {
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+      name: taskName,
+      createdAt: new Date().toISOString(),
+      completed: false,
+    };
+
+    // Add newly created task to the list
+    setTasks((prev) => [...prev, newTask]);
+  }
+
   const value = {
     tasks,
     setTasks,
+    createTask,
     toggleComplete,
   };
 
