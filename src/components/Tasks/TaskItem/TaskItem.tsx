@@ -7,6 +7,7 @@ import {
   IoTrashOutline,
   IoPencilOutline,
 } from 'react-icons/io5';
+import TaskEdit from '../TaskEdit/TaskEdit';
 
 type TaskItemProps = {
   task: Task;
@@ -48,17 +49,7 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   }
 
   if (isEditing)
-    return (
-      <form className={classes.task}>
-        <label htmlFor="edit-task" hidden>
-          Edit a task
-        </label>
-        <input id="edit-task" aria-label="Edit a task" />
-        <button type="submit" onClick={() => setIsEditing(false)}>
-          Finish Editing
-        </button>
-      </form>
-    );
+    return <TaskEdit task={task} onFinishEditing={() => setIsEditing(false)} />;
 
   return (
     <li
