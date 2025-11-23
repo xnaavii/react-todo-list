@@ -8,22 +8,19 @@ import {
   IoPencilOutline,
 } from 'react-icons/io5';
 import TaskEdit from '../TaskEdit/TaskEdit';
+import { useTodos } from '../../../hooks/useTodos';
 
 type TaskItemProps = {
   task: Task;
-  onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string, newTaskName: string) => void;
 };
 
-export default function TaskItem({
-  task,
-  onToggle,
-  onDelete,
-  onEdit,
-}: TaskItemProps) {
+export default function TaskItem({ task, onDelete, onEdit }: TaskItemProps) {
   const [selected, setSelected] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+
+  const { toggleComplete } = useTodos();
 
   const liRef = useRef<HTMLLIElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -86,7 +83,7 @@ export default function TaskItem({
           aria-label={
             task.completed ? 'Mark as incomplete' : 'Mark as complete'
           }
-          onClick={() => onToggle(task.id)}
+          onClick={() => toggleComplete(task.id)}
         >
           {task.completed ? (
             // Tasks Done Icon

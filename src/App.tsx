@@ -13,14 +13,6 @@ function App() {
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  function toggleDone(id: string) {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-  }
-
   function handleEditTask(id: string, newTaskName: string) {
     setTasks((prev) =>
       prev.map((task) =>
@@ -80,14 +72,12 @@ function App() {
         <TaskList
           tasks={tasksInProgress}
           listName={'In Progress'}
-          onToggle={toggleDone}
           onDelete={handleStartDeleteTask}
           onEdit={handleEditTask}
         />
         <TaskList
           tasks={doneTasks}
           listName={'Done'}
-          onToggle={toggleDone}
           onDelete={handleStartDeleteTask}
           onEdit={handleEditTask}
         />

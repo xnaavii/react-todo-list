@@ -5,7 +5,6 @@ import classes from './TaskList.module.css';
 type TaskListProps = {
   tasks: Task[];
   listName: 'In Progress' | 'Done';
-  onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string, newValue: string) => void;
 };
@@ -13,7 +12,6 @@ type TaskListProps = {
 export default function TaskList({
   tasks,
   listName,
-  onToggle,
   onDelete,
   onEdit
 }: TaskListProps) {
@@ -34,7 +32,6 @@ export default function TaskList({
           <TaskItem
             key={task.id}
             task={task}
-            onToggle={onToggle}
             onDelete={onDelete}
             onEdit={onEdit}
           />
