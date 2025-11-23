@@ -7,6 +7,7 @@ type TaskListProps = {
   listName: 'In Progress' | 'Done';
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
+  onEdit: (id: string, newValue: string) => void;
 };
 
 export default function TaskList({
@@ -14,6 +15,7 @@ export default function TaskList({
   listName,
   onToggle,
   onDelete,
+  onEdit
 }: TaskListProps) {
   let style;
 
@@ -28,14 +30,15 @@ export default function TaskList({
       <h2 className={classes.title}>{listName}</h2>
       {!tasks.length && <p className={classes.noTasks}>No tasks yet.</p>}
       <ul className={classes.tasks} aria-label={listName}>
-          {tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              onToggle={onToggle}
-              onDelete={onDelete}
-            />
-          ))}
+        {tasks.map((task) => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            onToggle={onToggle}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
+        ))}
       </ul>
     </section>
   );

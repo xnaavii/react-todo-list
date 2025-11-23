@@ -13,9 +13,15 @@ type TaskItemProps = {
   task: Task;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
+  onEdit: (id: string, newTaskName: string) => void;
 };
 
-export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
+export default function TaskItem({
+  task,
+  onToggle,
+  onDelete,
+  onEdit,
+}: TaskItemProps) {
   const [selected, setSelected] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -40,6 +46,10 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
     };
   }, [selected]);
 
+  function finishEditing() {
+    setIsEditing(false);
+  }
+
   let style = `${classes.task} ${
     task.completed ? classes.isDone : classes.isPending
   }`;
@@ -48,8 +58,11 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
     style += ` ${classes.selected}`;
   }
 
-  if (isEditing)
-    return <TaskEdit task={task} onFinishEditing={() => setIsEditing(false)} />;
+  if (isEditing) {
+    return (
+      <TaskEdit task={task} onEdit={onEdit} onFinishEdit={finishEditing} />
+    );
+  }
 
   return (
     <li
