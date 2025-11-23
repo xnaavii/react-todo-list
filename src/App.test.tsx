@@ -202,3 +202,24 @@ test('clicking on edit button will initiate editing', async () => {
   const editInput = screen.getByLabelText(/Edit a task/i);
   expect(editInput).toBeInTheDocument();
 });
+
+test('editing the task and clicking finish saves changes', async () => {
+  render(<App />);
+
+  await addTask('Buy milk');
+  expect(screen.getByText('Buy milk')).toBeInTheDocument();
+
+  await userEvent.click(screen.getByRole('button', { name: /edit task/i }));
+
+  const editInput = await screen.findByLabelText(/edit a task/i);
+  await userEvent.clear(editInput);
+  await userEvent.type(editInput, 'Buy coffee');
+
+  await userEvent.click(
+    screen.getByRole('button', { name: /finish editing/i })
+  );
+
+  expect(screen.getByText('Buy coffee')).toBeInTheDocument();
+
+  expect(screen.queryByText('Buy milk')).not.toBeInTheDocument();
+});
