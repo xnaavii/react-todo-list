@@ -1,6 +1,7 @@
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
+import { renderWithProvider } from './utils/test-utils';
 
 async function addTask(taskName: string) {
   const taskInput = screen.getByLabelText(/Add a task/i);
@@ -12,12 +13,12 @@ async function addTask(taskName: string) {
 }
 
 test('renders the app', () => {
-  render(<App />);
+  renderWithProvider(<App />);
   expect(screen.getByText(/To-Do List/i)).toBeInTheDocument();
 });
 
 test('renders the logo', () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const logo = screen.getByRole('img', { name: /logo/i });
   const text = screen.getByText(/To-Do List/i);
   expect(text).toBeInTheDocument();
@@ -25,20 +26,20 @@ test('renders the logo', () => {
 });
 
 test('renders the input field', () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskInput = screen.getByLabelText(/Add a task/i);
   expect(taskInput).toBeInTheDocument();
 });
 
 test('user can type in the input', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskInput = screen.getByLabelText(/Add a task/i);
   await userEvent.type(taskInput, 'Buy milk');
   expect(taskInput).toHaveValue('Buy milk');
 });
 
 test('shows an error when submitting empty input', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskInput = screen.getByLabelText(/Add a task/i);
   await userEvent.type(taskInput, '{Enter}');
   const errorMessage = screen.getByText(/Task name cannot be empty/i);
@@ -46,7 +47,7 @@ test('shows an error when submitting empty input', async () => {
 });
 
 test('removes error message when typing', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskInput = screen.getByLabelText(/Add a task/i);
 
   await userEvent.type(taskInput, '{Enter}');
@@ -59,14 +60,14 @@ test('removes error message when typing', async () => {
 });
 
 test('adds a new task to the list when the form is submitted', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
 
   const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
 });
 
 test('checks if new task is added to the in progress list', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskInput = screen.getByLabelText(/Add a task/i);
   await userEvent.type(taskInput, 'Buy milk{Enter}');
 
@@ -76,7 +77,7 @@ test('checks if new task is added to the in progress list', async () => {
 });
 
 test('checks if task is marked as a complete and moved to the Done list', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskInput = screen.getByLabelText(/Add a task/i);
   await userEvent.type(taskInput, 'Buy milk{Enter}');
 
@@ -93,7 +94,7 @@ test('checks if task is marked as a complete and moved to the Done list', async 
 });
 
 test('shows a remove button on a task item for task removal', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
 
   const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
@@ -106,7 +107,7 @@ test('shows a remove button on a task item for task removal', async () => {
 });
 
 test('remove button opens alert dialog', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
 
   const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
@@ -121,7 +122,7 @@ test('remove button opens alert dialog', async () => {
 });
 
 test('cancel button closes alert dialog', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskItem = await addTask('Buy milk');
 
   const removeButton = within(taskItem as HTMLElement).getByRole('button', {
@@ -138,7 +139,7 @@ test('cancel button closes alert dialog', async () => {
 });
 
 test('closes alert dialog when clicking outside', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
 
@@ -159,7 +160,7 @@ test('closes alert dialog when clicking outside', async () => {
 });
 
 test('clicking on confirm button removes a task', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
 
@@ -181,7 +182,7 @@ test('clicking on confirm button removes a task', async () => {
 });
 
 test('clicking on a task selects it', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
 
@@ -190,7 +191,7 @@ test('clicking on a task selects it', async () => {
 });
 
 test('clicking on edit button will initiate editing', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
   const taskItem = await addTask('Buy milk');
   expect(taskItem).toBeInTheDocument();
 
@@ -204,7 +205,7 @@ test('clicking on edit button will initiate editing', async () => {
 });
 
 test('editing the task and clicking finish saves changes', async () => {
-  render(<App />);
+  renderWithProvider(<App />);
 
   await addTask('Buy milk');
   expect(screen.getByText('Buy milk')).toBeInTheDocument();
