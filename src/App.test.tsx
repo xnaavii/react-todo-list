@@ -188,3 +188,17 @@ test('clicking on a task selects it', async () => {
   await userEvent.click(taskItem);
   expect(taskItem).toHaveAttribute('data-selected', 'true');
 });
+
+test('clicking on edit button will initiate editing', async () => {
+  render(<App />);
+  const taskItem = await addTask('Buy milk');
+  expect(taskItem).toBeInTheDocument();
+
+  const editButton = within(taskItem as HTMLElement).getByRole('button', {
+    name: /edit button/i,
+  });
+  await userEvent.click(editButton);
+
+  const editInput = screen.getByLabelText(/Edit a task/i);
+  expect(editInput).toBeInTheDocument();
+});

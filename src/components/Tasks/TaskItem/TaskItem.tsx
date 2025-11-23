@@ -5,6 +5,7 @@ import {
   IoCheckmarkCircle,
   IoEllipseOutline,
   IoTrashOutline,
+  IoPencilOutline
 } from 'react-icons/io5';
 
 type TaskItemProps = {
@@ -53,21 +54,6 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
       {/* Buttons */}
       <menu className={classes.buttons}>
         {/* 
-        Delete button
-        used to remove a task
-        */}
-        <button
-          aria-label="Delete task"
-          className={classes.button}
-          onClick={() => onDelete(task.id)}
-        >
-          <IoTrashOutline
-            size={24}
-            className={classes.deleteButton}
-            strokeWidth={1.72}
-          />
-        </button>
-        {/* 
         Toggle task completion button
         Changes depending on the task status
         */}
@@ -95,6 +81,35 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
               strokeWidth={1.72}
             />
           )}
+        </button>
+        {/* 
+        Edit button
+        used to edit a task
+        */}
+        <button
+          aria-label="Edit task"
+          className={classes.button}
+        >
+          <IoPencilOutline
+            size={18}
+            className={classes.editButton}
+            strokeWidth={1.72}
+          />
+        </button>
+        {/* 
+        Delete button
+        used to remove a task
+        */}
+        <button
+          aria-label="Delete task"
+          className={classes.button}
+          onClick={() => onDelete(task.id)}
+        >
+          <IoTrashOutline
+            size={18}
+            className={classes.deleteButton}
+            strokeWidth={1.72}
+          />
         </button>
       </menu>
     </li>

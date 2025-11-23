@@ -52,11 +52,16 @@
   color: var(--accent-orange);
 }
 
+.editButton {
+  stroke: var(--grey-200);
+  color: var(--grey-200);
+}
+
 .buttons {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+  gap: 4px;
 }
 
 .selected {
