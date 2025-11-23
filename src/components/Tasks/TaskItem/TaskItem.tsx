@@ -26,6 +26,7 @@ export default function TaskItem({
   const [isEditing, setIsEditing] = useState(false);
 
   const liRef = useRef<HTMLLIElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Check if the click is outside the taskitem
@@ -46,10 +47,6 @@ export default function TaskItem({
     };
   }, [selected]);
 
-  function finishEditing() {
-    setIsEditing(false);
-  }
-
   let style = `${classes.task} ${
     task.completed ? classes.isDone : classes.isPending
   }`;
@@ -60,7 +57,12 @@ export default function TaskItem({
 
   if (isEditing) {
     return (
-      <TaskEdit task={task} onEdit={onEdit} onFinishEdit={finishEditing} />
+      <TaskEdit
+        task={task}
+        onEdit={onEdit}
+        setIsEditing={setIsEditing}
+        ref={inputRef}
+      />
     );
   }
 
@@ -111,7 +113,12 @@ export default function TaskItem({
         <button
           aria-label="Edit task"
           className={classes.button}
-          onClick={() => setIsEditing(true)}
+          onClick={() => {
+            setIsEditing(true);
+            setTimeout(() => {
+              inputRef.current?.focus();
+            }, 0);
+          }}
         >
           <IoPencilOutline
             size={18}

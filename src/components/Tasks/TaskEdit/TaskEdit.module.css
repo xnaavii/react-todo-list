@@ -1,17 +1,16 @@
 .taskEditForm {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 8px 12px;
   background-color: var(--secondary-color);
-  list-style-type: none;
-  max-width: 630px;
   min-height: 52px;
+  max-width: 630px;
   border-left: 4px solid var(--grey-washed-out);
 }
 
 .taskInput {
+  flex: 1;
+  min-width: 0;
   font-size: var(--font-p);
   font-weight: 400;
   color: var(--grey-400);
@@ -31,4 +30,24 @@
 .finishEditBtn:hover {
   background-color: var(--accent-green);
   color: var(--secondary-color);
+}
+
+.cancelEditBtn {
+  align-self: flex-end;
+  border: none;
+}
+
+.errorMessage {
+  color: var(--accent-orange);
+  font-size: var(--font-small);
+  margin: 0 auto;
+  width: 100%;
+  max-width: 630px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
 }
