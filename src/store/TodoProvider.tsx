@@ -4,9 +4,12 @@ import type { Task } from '../types/Task';
 export type TodoContextType = {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  editingTaskId: string | null;
+  setEditingTaskId: React.Dispatch<React.SetStateAction<string | null>>;
   toggleComplete: (id: string) => void;
   createTask: (taskName: string) => void;
   editTask: (id: string, newTaskName: string) => void;
+  deleteTask: (id: string) => void;
 };
 
 type TodoProviderProps = {
@@ -17,6 +20,7 @@ const TodoContext = createContext<TodoContextType | null>(null);
 
 export default function TodoProvider({ children }: TodoProviderProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
 
   function toggleComplete(id: string) {
     // Takes an task id argument and toggles the completion status
@@ -57,11 +61,22 @@ export default function TodoProvider({ children }: TodoProviderProps) {
     );
   }
 
+  function deleteTask(id: string) {
+    /* 
+    Takes task id as an argument
+    finds the task and removes it
+    */
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  }
+
   const value = {
     tasks,
     setTasks,
+    editingTaskId,
+    setEditingTaskId,
     createTask,
     editTask,
+    deleteTask,
     toggleComplete,
   };
 

@@ -7,15 +7,15 @@ import Modal from './components/AlertModal/AlertModal';
 import { useTodos } from './hooks/useTodos';
 
 function App() {
-  const { tasks, setTasks } = useTodos();
+  const { tasks, deleteTask } = useTodos();
   const [isOpen, setIsOpen] = useState(false);
   const [taskToRemoveId, setTaskToRemoveId] = useState('');
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   function handleDeleteTask() {
-    setTasks((prev) => prev.filter((task) => task.id !== taskToRemoveId));
     dialogRef.current?.close();
+    deleteTask(taskToRemoveId);
     setIsOpen(false);
   }
 

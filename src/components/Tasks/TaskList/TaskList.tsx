@@ -8,11 +8,8 @@ type TaskListProps = {
   onDelete: (id: string) => void;
 };
 
-export default function TaskList({
-  tasks,
-  listName,
-  onDelete,
-}: TaskListProps) {
+export default function TaskList({ tasks, listName, onDelete }: TaskListProps) {
+
   let style;
 
   if (listName === 'In Progress') {

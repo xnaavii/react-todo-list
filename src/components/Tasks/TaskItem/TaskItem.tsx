@@ -17,9 +17,10 @@ type TaskItemProps = {
 
 export default function TaskItem({ task, onDelete }: TaskItemProps) {
   const [selected, setSelected] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
-  const { toggleComplete } = useTodos();
+  const { toggleComplete, editingTaskId, setEditingTaskId } = useTodos();
+
+  const isEditing = editingTaskId === task.id;
 
   const liRef = useRef<HTMLLIElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -55,7 +56,7 @@ export default function TaskItem({ task, onDelete }: TaskItemProps) {
     return (
       <TaskEdit
         task={task}
-        setIsEditing={setIsEditing}
+        setIsEditing={() => setEditingTaskId(null)}
         ref={inputRef}
       />
     );
@@ -109,7 +110,7 @@ export default function TaskItem({ task, onDelete }: TaskItemProps) {
           aria-label="Edit task"
           className={classes.button}
           onClick={() => {
-            setIsEditing(true);
+            setEditingTaskId(task.id);
             setTimeout(() => {
               inputRef.current?.focus();
             }, 0);
