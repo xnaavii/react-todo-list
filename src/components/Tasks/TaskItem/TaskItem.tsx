@@ -5,7 +5,7 @@ import {
   IoCheckmarkCircle,
   IoEllipseOutline,
   IoTrashOutline,
-  IoPencilOutline
+  IoPencilOutline,
 } from 'react-icons/io5';
 
 type TaskItemProps = {
@@ -16,6 +16,28 @@ type TaskItemProps = {
 
 export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   const [selected, setSelected] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const liRef = useRef<HTMLLIElement>(null);
+
+  useEffect(() => {
+    // Check if the click is outside the taskitem
+    // Remove the class 'selected' if it's outside taskitem
+    function handleClick(e: MouseEvent) {
+      const li = liRef.current;
+      if (li && !li.contains(e.target as Node) && selected) {
+        setSelected(false);
+      }
+    }
+
+    // Add event listener
+    document.body.addEventListener('click', handleClick);
+
+    // Cleanup function to remove the event listener
+    return () => {
+      document.body.removeEventListener('click', handleClick);
+    };
+  }, [selected]);
 
   let style = `${classes.task} ${
     task.completed ? classes.isDone : classes.isPending
@@ -25,22 +47,18 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
     style += ` ${classes.selected}`;
   }
 
-  const liRef = useRef<HTMLLIElement>(null);
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      const li = liRef.current;
-      if (li && !li.contains(e.target as Node) && selected) {
-        setSelected(false);
-      }
-    }
-
-    document.body.addEventListener('click', handleClick);
-
-    return () => {
-      document.body.removeEventListener('click', handleClick);
-    };
-  }, [selected]);
+  if (isEditing)
+    return (
+      <form className={classes.task}>
+        <label htmlFor="edit-task" hidden>
+          Edit a task
+        </label>
+        <input id="edit-task" aria-label="Edit a task" />
+        <button type="submit" onClick={() => setIsEditing(false)}>
+          Finish Editing
+        </button>
+      </form>
+    );
 
   return (
     <li
@@ -89,6 +107,7 @@ export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         <button
           aria-label="Edit task"
           className={classes.button}
+          onClick={() => setIsEditing(true)}
         >
           <IoPencilOutline
             size={18}

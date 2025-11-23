@@ -195,7 +195,7 @@ test('clicking on edit button will initiate editing', async () => {
   expect(taskItem).toBeInTheDocument();
 
   const editButton = within(taskItem as HTMLElement).getByRole('button', {
-    name: /edit button/i,
+    name: /edit task/i,
   });
   await userEvent.click(editButton);
 
